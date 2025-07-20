@@ -6,7 +6,9 @@ export function useRegistrarData() {
   const [students, setStudents] = useState([]);
 
   const getRegisterations = async () => {
-    const response = await fetch(`${apiUrl}/receipt_records`);
+    const response = await fetch(`${apiUrl}/receipt_records`, {
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error("An error occured");

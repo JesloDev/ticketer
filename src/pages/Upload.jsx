@@ -1,6 +1,8 @@
 import * as pdfjsLib from "pdfjs-dist";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import UploadPic from ".././assets/upload.png";
+import { useLoader } from "../stores/useLoader";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.3.31/pdf.worker.min.mjs";
@@ -11,6 +13,7 @@ const Upload = () => {
   const [message, setMessage] = useState("");
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState(""); // "extracting" | "uploading"
+  const { setLoading } = useLoader();
 
   const handleFile = async (e) => {
     const file = e.target.files[0];
@@ -48,17 +51,37 @@ const Upload = () => {
       await new Promise((res) => setTimeout(res, 80));
       setProgress(i);
     }
+    console.log({ data });
 
-    // Send to backend (you can replace with real endpoint)
-    await fetch(`${apiUrl}/upload`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    try {
+      setLoading(true);
+      // Send to backend
+      const response = await fetch(`${apiUrl}/upload`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+        credentials: "include",
+      });
 
-    setMessage("Upload successful!");
-    setProgress(100);
-    setPhase("");
+      if (!response.ok) {
+        throw new Error("Unable to upload tickets");
+      }
+
+      const result = await response.json();
+
+      setMessage(result.message || "Upload successful!");
+      setProgress(100);
+      setTimeout(() => {
+        setProgress(0);
+      }, 10);
+      setPhase("");
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+      setProgress(0);
+      setPhase("");
+    }
   };
 
   const handlePDF = async (file) => {

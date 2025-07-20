@@ -7,7 +7,9 @@ export function useStudentData() {
   const [students, setStudents] = useState([]);
 
   const getRegisterations = async () => {
-    const response = await fetch(`${apiUrl}/record`);
+    const response = await fetch(`${apiUrl}/record`, {
+      credentials: "include",
+    });
 
     if (!response.ok) {
       throw new Error("An error occured");
@@ -31,6 +33,7 @@ export function useStudentData() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(updatedData),
       });
 

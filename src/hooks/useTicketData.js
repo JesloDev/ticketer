@@ -12,7 +12,7 @@ export function useTicketData() {
   const fetchTickets = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/tickets");
+      const res = await fetch("/api/tickets", { credentials: "include" });
       // const data = await res.json();
       const data = [
         {
@@ -279,6 +279,7 @@ export function useTicketData() {
       const res = await fetch(`/api/tickets/${id}/assign`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ matric_number: matric }),
       });
 
