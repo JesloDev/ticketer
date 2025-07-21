@@ -4,9 +4,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import { useTicketData } from "../../hooks/useTicketData";
 import Button from "../Button";
+import Loader from "../Loader";
 import AssignTicketModal from "../modals/AssignTicketModal";
 import ViewTicketModal from "../modals/ViewTicketModal";
 
@@ -16,8 +16,8 @@ export default function TicketTable() {
   const [viewing, setViewing] = useState(null);
 
   const columns = [
-    { accessorKey: "ticket_id", header: "Ticket ID" },
-    { accessorKey: "ticket_number", header: "Ticket Number" },
+    { accessorKey: "token_id", header: "Ticket ID" },
+    { accessorKey: "token", header: "Ticket Number" },
     { accessorKey: "usage", header: "Usage" },
     {
       header: "Actions",
@@ -48,7 +48,6 @@ export default function TicketTable() {
 
   return (
     <div className="p-6">
-      {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
 
       <table className="w-full shadow">
@@ -85,6 +84,15 @@ export default function TicketTable() {
                 </tr>
               );
             })
+          ) : loading ? (
+            <tr>
+              <td
+                colSpan={columns.length}
+                className="text-center py-6 text-gray-500"
+              >
+                Loading <Loader />
+              </td>
+            </tr>
           ) : (
             <tr>
               <td
@@ -103,9 +111,10 @@ export default function TicketTable() {
           ticket={selected}
           onClose={() => setSelected(null)}
           onAssign={async (matric) => {
-            const success = await assignTicket(selected.ticket_id, matric);
-            if (success) setSelected(null);
-            else toast.error("Assignment failed");
+            const success = await assignTicket(selected.token, matric);
+            if (success) {
+              setSelected(null);
+            }
           }}
         />
       )}

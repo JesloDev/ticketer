@@ -19,7 +19,7 @@ export default function AssignTicketModal({ ticket, onAssign, onClose }) {
       <div className="bg-white p-6 rounded-lg w-[400px]">
         <h3 className="text-lg font-semibold mb-4">Assign Ticket</h3>
         <p className="text-sm mb-2 text-gray-600">
-          Ticket Number: <strong>{ticket.ticket_number}</strong>
+          Ticket Number: <strong>{ticket.token}</strong>
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
           {errors.assign_ticket && (

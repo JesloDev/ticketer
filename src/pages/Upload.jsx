@@ -51,7 +51,6 @@ const Upload = () => {
       await new Promise((res) => setTimeout(res, 80));
       setProgress(i);
     }
-    console.log({ data });
 
     try {
       setLoading(true);
@@ -75,6 +74,7 @@ const Upload = () => {
         setProgress(0);
       }, 10);
       setPhase("");
+      toast.success(result.message);
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -126,8 +126,6 @@ const Upload = () => {
         token_id: `${batch}-${index + 1}`,
         usage: "available",
       }));
-
-      console.log({ finalData });
 
       await sendToBackend(finalData);
     };
