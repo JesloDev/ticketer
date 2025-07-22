@@ -10,7 +10,7 @@ export function useStudentData() {
 
   const getRegisterations = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const response = await fetch(`${apiUrl}/record`, {
         credentials: "include",
       });
@@ -37,7 +37,7 @@ export function useStudentData() {
 
   const updateStudent = async (id, updatedData) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const response = await fetch(`${apiUrl}/record/update_metadata`, {
         method: "PUT",
         headers: {
