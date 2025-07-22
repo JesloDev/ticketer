@@ -179,8 +179,8 @@ const Upload = () => {
   // };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 px-4">
-      <img src={UploadPic} alt="upload" className="w-[200px]" />
+    <div className="flex flex-col items-center justify-center bg-white aspect-square w-[300px] rounded-lg shadow-sm">
+      <img src={UploadPic} alt="upload" className="w-[150px]" />
 
       <label className="mt-6 bg-sky-500 hover:bg-sky-600 text-white px-6 py-3 rounded-full cursor-pointer shadow transition duration-200">
         Choose File

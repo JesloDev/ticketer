@@ -20,7 +20,7 @@ const Sidebar = () => {
       allowedRoles: ["superadmin"],
     },
     {
-      text: "Registerations",
+      text: "Registrations",
       path: "/reg_data",
       img: "",
       allowedRoles: ["superadmin", "register"],

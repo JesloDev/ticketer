@@ -27,6 +27,11 @@ const Registeration = () => {
         body: JSON.stringify(data),
       });
 
+      if (response.status === 409) {
+        const data = await response.json();
+        throw new Error(data.error);
+      }
+
       if (!response.ok) {
         throw new Error("An error occured");
       }
@@ -58,45 +63,71 @@ const Registeration = () => {
       </h2>
       <form className="py-4 space-y-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="w-[80%] mx-auto">
-          <label htmlFor="firstname">
+          <label htmlFor="first_name">
             First Name:{" "}
-            {errors.firstname && (
-              <span className="text-red-300">*required</span>
+            {errors.first_name && (
+              <span className="text-red-300">
+                {errors.first_name.message || "*required"}
+              </span>
             )}
           </label>
           <input
-            name="firstname"
+            name="first_name"
             className="border border-l-4 border-sky-300 p-1 rounded block w-full"
             type="text"
-            {...register("first_name", { required: true })}
+            {...register("first_name", {
+              required: true,
+              pattern: {
+                value: /^\S+$/,
+                message: "No spaces allowed, use one continuous word",
+              },
+            })}
             placeholder="John"
           />
         </div>
         <div className="w-[80%] mx-auto">
-          <label htmlFor="lastname">
+          <label htmlFor="last_name">
             Last Name:{" "}
-            {errors.lastname && <span className="text-red-300">*required</span>}
+            {errors.last_name && (
+              <span className="text-red-300">
+                {errors.last_name.message || "*required"}
+              </span>
+            )}
           </label>
           <input
-            name="lastname"
+            name="last_name"
             className="border border-l-4 border-sky-300 p-1 rounded block w-full"
             type="text"
-            {...register("last_name", { required: true })}
+            {...register("last_name", {
+              required: true,
+              pattern: {
+                value: /^\S+$/,
+                message: "No spaces allowed, use one continuous word",
+              },
+            })}
             placeholder="Doe"
           />
         </div>
         <div className="w-[80%] mx-auto">
-          <label htmlFor="othername">
+          <label htmlFor="other_name">
             Other Name:{" "}
-            {errors.othername && (
-              <span className="text-red-300">*required</span>
+            {errors.other_name && (
+              <span className="text-red-300">
+                {errors.other_name.message || "*required"}
+              </span>
             )}
           </label>
           <input
-            name="othername"
+            name="other_name"
             className="border border-l-4 border-sky-300 p-1 rounded block w-full"
             type="text"
-            {...register("other_name", { required: true })}
+            {...register("other_name", {
+              required: true,
+              pattern: {
+                value: /^\S+$/,
+                message: "No spaces allowed, use one continuous word",
+              },
+            })}
             placeholder="Shaun"
           />
         </div>
@@ -124,27 +155,31 @@ const Registeration = () => {
           />
         </div>
         <div className="w-[80%] mx-auto">
-          <label htmlFor="phone_no">
-            Phone No:{" "}
-            {errors.phone_no && <span className="text-red-300">*required</span>}
+          <label htmlFor="phone_number">
+            Phone number:{" "}
+            {errors.phone_number && (
+              <span className="text-red-300">
+                {errors.phone_number.message || "*required"}
+              </span>
+            )}
           </label>
           <input
-            name="phone_no"
+            name="phone_number"
             className="border border-l-4 border-sky-300 p-1 rounded block w-full"
             type="tel"
-            {...register("phone_number", { required: true })}
+            {...register("phone_number", { required: true, maxLength: 11 })}
             placeholder="e.g. 09029387645"
           />
         </div>
         <div className="w-[80%] mx-auto">
-          <label htmlFor="matric_no">
-            Matric No:{" "}
-            {errors.matric_no && (
+          <label htmlFor="matric_number">
+            Matric number:{" "}
+            {errors.matric_number && (
               <span className="text-red-300">*required</span>
             )}
           </label>
           <input
-            name="matric_no"
+            name="matric_number"
             className="border border-l-4 border-sky-300 p-1 rounded block w-full"
             type="text"
             {...register("matric_number", { required: true })}

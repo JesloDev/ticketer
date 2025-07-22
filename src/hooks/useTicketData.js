@@ -46,7 +46,13 @@ export function useTicketData() {
         credentials: "include",
         body: JSON.stringify({ matric_number: matric, token }),
       });
+
       if (response.status === 400) {
+        const data = await response.json();
+        throw new Error(data.error);
+      }
+
+      if (response.status === 409) {
         const data = await response.json();
         throw new Error(data.error);
       }

@@ -44,7 +44,7 @@ export default function AssignTicketModal({ ticket, onAssign, onClose }) {
               text="Assign"
               type="submit"
               onClick={() => matric && onAssign(matric)}
-              className="bg-green-600 text-white mx-0 "
+              className="bg-green-700 text-white mx-0 "
             />
           </div>
         </form>

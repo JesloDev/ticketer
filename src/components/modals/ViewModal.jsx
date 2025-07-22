@@ -4,12 +4,13 @@ export default function ViewModal({ student, onClose }) {
   const entries = Object.entries(student);
 
   return (
-    <div className="fixed inset-0 bg-[#000000c9] flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-[#000000c9] flex justify-center items-center z-50 overflow-auto">
       <div className="bg-white w-[600px] rounded-lg shadow-lg p-6">
         <h2 className="text-xl font-semibold mb-6 text-gray-800 border-b pb-2">
           Student Details
         </h2>
         <div className="space-y-1 text-sm">
+          {console.log({ entries })}
           {entries.map(([key, value], index) => (
             <div
               key={key}

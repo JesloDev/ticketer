@@ -44,7 +44,12 @@ const App = () => {
             path="upload"
             element={
               <ProtectedRoute allowedRoles={["uploader", "superadmin"]}>
-                <Upload />
+                <div className="min-h-screen bg-gray-50 px-4 pt-10">
+                  <div className="flex justify-around ">
+                    <Upload />
+                    {/* <DownloadRecord /> */}
+                  </div>
+                </div>
               </ProtectedRoute>
             }
           />
