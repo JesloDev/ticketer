@@ -20,12 +20,12 @@ const App = () => {
 
   useEffect(() => {
     checkExpiry();
-  }, []);
+  }, [checkExpiry]);
 
   useEffect(() => {
     const interval = setInterval(() => checkExpiry(), 60 * 1000); // every 1 min
     return () => clearInterval(interval);
-  }, []);
+  }, [checkExpiry]);
 
   return (
     <>

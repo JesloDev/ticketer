@@ -11,7 +11,8 @@ const ProtectedRoute = ({ allowedRoles, redirectOnDeny = false, children }) => {
   const next = queryParams.get("next") || location.pathname;
 
   useEffect(() => {
-    if (!isAuthenticated) return navigate(`/login?next=${next}`);
+    if (!isAuthenticated)
+      return navigate(`/login?next=${encodeURIComponent(next)}`);
   }, [isAuthenticated, next, navigate]);
 
   if (!allowedRoles.includes(user?.role)) {
