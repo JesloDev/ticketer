@@ -40,6 +40,7 @@ export function useTicketData() {
 
   const assignTicket = async (token, matric) => {
     try {
+      setLoading(true);
       const response = await fetch(`${apiUrl}/assign`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,15 +48,14 @@ export function useTicketData() {
         body: JSON.stringify({ matric_number: matric, token }),
       });
 
-      if (response.status === 400) {
-        const data = await response.json();
-        throw new Error(data.error);
-      }
+      const data = await response.json();
 
-      if (response.status === 409) {
-        const data = await response.json();
+      if (
+        response.status === 400 ||
+        response.status === 404 ||
+        response.status === 409
+      )
         throw new Error(data.error);
-      }
 
       if (!response.ok) throw new Error(`Failed to assign ticket to ${matric}`);
 
@@ -63,7 +63,7 @@ export function useTicketData() {
         message,
         updated_ticket: { token_id, usage },
         updated_record: matric_number,
-      } = await response.json();
+      } = data;
 
       setTickets((prev) => {
         console.log({ prev });
@@ -78,6 +78,8 @@ export function useTicketData() {
       console.error(err);
       toast.error(err.message);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 

@@ -1,6 +1,5 @@
-// stores/authStore.js
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 export const useAuthStore = create(
   persist(
@@ -25,7 +24,17 @@ export const useAuthStore = create(
     }),
     {
       name: "auth-storage",
-      getStorage: () => localStorage,
+      getStorage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        ...state,
+        user: state.user
+          ? Object.fromEntries(
+              Object.entries(state.user).filter(
+                ([key]) => !["message"].includes(key)
+              )
+            )
+          : null,
+      }),
     }
   )
 );

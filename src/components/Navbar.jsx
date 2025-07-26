@@ -26,7 +26,7 @@ const Navbar = () => {
       {/* <section className=""> */}
       <h2 className="ml-4">Ticketer</h2>
 
-      {user && (
+      {user?.username && (
         <>
           <section className="flex gap-2 items-center mr-4">
             <span className="bg-white rounded-full p-2">

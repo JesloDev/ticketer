@@ -1,10 +1,18 @@
-import { Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/authStore";
 
 const ProtectedRoute = ({ allowedRoles, redirectOnDeny = false, children }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { user, isAuthenticated } = useAuthStore();
 
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  const queryParams = new URLSearchParams(location.search);
+  const next = queryParams.get("next") || location.pathname;
+
+  useEffect(() => {
+    if (!isAuthenticated) return navigate(`/login?next=${next}`);
+  }, [isAuthenticated, next, navigate]);
 
   if (!allowedRoles.includes(user?.role)) {
     return redirectOnDeny ? (

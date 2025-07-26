@@ -14,6 +14,9 @@ const Login = () => {
   const { setLoading } = useLoader();
   const navigate = useNavigate();
 
+  const queryParams = new URLSearchParams(location.search);
+  const next = queryParams.get("next");
+
   const {
     register,
     handleSubmit,
@@ -46,9 +49,10 @@ const Login = () => {
       toast.success(result.message || "Login Successful");
 
       // Redirect based on role
-      if (result.role === "uploader") navigate("/upload");
-      else if (result.role === "register") navigate("/start_registeration");
-      else if (result.role === "superadmin") navigate("/");
+      if (result.role === "uploader") navigate(next || "/upload");
+      else if (result.role === "register")
+        navigate(next || "/start_registeration");
+      else if (result.role === "superadmin") navigate(next || "/");
       else navigate("/"); // fallback
     } catch (err) {
       console.error(err);
