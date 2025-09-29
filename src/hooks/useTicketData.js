@@ -66,8 +66,6 @@ export function useTicketData() {
       } = data;
 
       setTickets((prev) => {
-        console.log({ prev });
-
         prev.map((t) => {
           t.token_id === token_id ? { ...t, usage: usage, matric_number } : t;
         });

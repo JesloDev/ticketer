@@ -6,13 +6,8 @@ export default function AssignTicketModal({ ticket, onAssign, onClose }) {
   const [matric, setMatric] = useState("");
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
 
   return (
     <div className="fixed inset-0 bg-[#0000009d] flex items-center justify-center z-50">
@@ -21,7 +16,7 @@ export default function AssignTicketModal({ ticket, onAssign, onClose }) {
         <p className="text-sm mb-2 text-gray-600">
           Ticket Number: <strong>{ticket.token}</strong>
         </p>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           {errors.assign_ticket && (
             <span className="text-red-300">*required</span>
           )}

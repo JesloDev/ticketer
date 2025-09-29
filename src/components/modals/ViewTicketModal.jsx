@@ -1,6 +1,4 @@
 export default function ViewTicketModal({ ticket, onClose }) {
-  console.log(ticket);
-
   return (
     <div className="fixed inset-0 bg-[#0000009d] flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded w-[400px]">

@@ -66,8 +66,51 @@ export function useStudentData() {
     }
   };
 
-  const deleteStudent = (id) =>
-    setStudents((prev) => prev.filter((student) => student.id !== id));
+  const deleteStudent = async (id, matric_number) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${apiUrl}/delete`, {
+        method: "delete",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(matric_number),
+      });
 
-  return { students, updateStudent, deleteStudent };
+      if (!response.ok) {
+        throw new Error("Failed to delete student record");
+      }
+
+      const res = await response.json();
+
+      setStudents((prev) => prev.filter((student) => student.id !== id));
+      toast.success(res.message);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDownloadCSV = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${apiUrl}/download_receipt_records`, {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("An error occured");
+      }
+
+      // download csv to user device
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { students, updateStudent, deleteStudent, handleDownloadCSV };
 }

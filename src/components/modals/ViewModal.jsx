@@ -10,7 +10,6 @@ export default function ViewModal({ student, onClose }) {
           Student Details
         </h2>
         <div className="space-y-1 text-sm">
-          {console.log({ entries })}
           {entries.map(([key, value], index) => (
             <div
               key={key}

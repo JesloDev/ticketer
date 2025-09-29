@@ -15,7 +15,8 @@ export default function StudentTable() {
   // const [editingStudent, setEditingStudent] = useState(null);
   const [editData, setEditData] = useState(null);
   const [viewingStudent, setViewingStudent] = useState(null);
-  const { students, updateStudent, deleteStudent } = useStudentData();
+  const { students, updateStudent, deleteStudent, handleDownloadCSV } =
+    useStudentData();
   const [search, setSearch] = useState("");
 
   const filtered = useMemo(() => {
@@ -28,8 +29,8 @@ export default function StudentTable() {
       : [];
   }, [search, students]);
 
-  const handleDelete = (id) => {
-    deleteStudent(id);
+  const handleDelete = async (id, matric) => {
+    await deleteStudent(id, matric);
     toast.success("Deleted!");
   };
 
@@ -64,7 +65,9 @@ export default function StudentTable() {
             <Button
               text="Delete"
               className="bg-red-500 hover:bg-red-600 text-white px-2 py-0.5 rounded-full text-sm cursor-pointer"
-              onClick={() => handleDelete(row.original.id)}
+              onClick={() =>
+                handleDelete(row.original.id, row.original.matric_number)
+              }
             />
           </div>
         ),
@@ -88,6 +91,13 @@ export default function StudentTable() {
         onChange={(e) => setSearch(e.target.value)}
         className="border p-2 mb-4 w-full rounded-lg"
       />
+
+      <Button
+        text="Download CSV"
+        className="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded-lg text-sm cursor-pointer mr-0 mb-1"
+        onClick={handleDownloadCSV}
+      />
+
       <div className="p-4 overflow-x-auto bg-white rounded-lg shadow-md">
         <table className="min-w-full divide-y divide-gray-200 text-sm">
           <thead className="bg-gray-100 text-left text-gray-700 uppercase text-xs">
